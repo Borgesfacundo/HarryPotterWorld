@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Harry Potter Universe</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,33 +14,35 @@
     />
   </head>
 
-  <body>
+  <body class="dark-mode">
     <header>
       <div class="logo-container">
-        <img src="#" alt="Harry Potter Logo" class="logo" />
-        <h1>Harry Potter Universe</h1>
+        <img src="images/logo.webp" alt="Harry Potter Logo" class="logo" loading="lazy" width="80" height="80"/>
+        <h2>Harry Potter Universe</h2>
       </div>
       <div class="welcome-container"><h3></h3></div>
-      <a href="#" class="color-btn"></a>
-      <a href="hamburger-btn"></a>
+      <button id="dark-mode-toggle" class="dark-mode-toggle">
+        <span class="toggle-icon">🌙</span>
+        <span class="toggle-text">Dark Mode</span>
+      </button>
       <div class="social-media">
         <a
           href="https://www.facebook.com"
           target="_blank"
           class="social-icon facebook"
-          >facebook</a
+          ><img src="images/social media/fb.png" alt="FB logo" width="25"></a
         >
         <a
           href="https://www.twitter.com"
           target="_blank"
           class="social-icon twitter"
-          >Twitter</a
+          ><img src="images/social media/twitter.png" alt="Twitter logo" width="25"></a
         >
         <a
           href="https://www.instagram.com"
           target="_blank"
           class="social-icon instagram"
-          >Instagram</a
+          ><img src="images/social media/Ig.png" alt="IG logo" width="25"></a
         >
       </div>
     </header>
@@ -62,22 +64,22 @@
           href="https://www.facebook.com"
           target="_blank"
           class="social-icon facebook"
-          >facebook</a
+          ><img src="images/social media/fb.png" alt="FB logo" width="25"></a
         >
         <a
           href="https://www.twitter.com"
           target="_blank"
           class="social-icon twitter"
-          >Twitter</a
+          ><img src="images/social media/twitter.png" alt="Twitter logo" width="25"></a
         >
         <a
           href="https://www.instagram.com"
           target="_blank"
           class="social-icon instagram"
-          >Instagram</a
+          ><img src="images/social media/Ig.png" alt="IG logo" width="25"></a
         >
       </div>
-      <div class="foot-paragraph"><p>@copy bla bla bla..</p></div>
+      <div class="foot-paragraph"><p>&copy; Facundo E Borges - <span class="year"></span></p></div>
       <div class="foot-logo"><img src="#" alt="" /></div>
     </footer>
   </body>

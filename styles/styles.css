@@ -1,3 +1,32 @@
+:root {
+    --background: #fff;
+    --word-color: #122c34;
+    --dark-combo: #92bfb1;
+    --header-color: #dad6d6;
+    --light-combo: #522a27;
+    --title-color: #a61c3c;
+}
+
+.darkmode {
+    --background: #122c34;
+    --word-color: #fff;
+
+}
+
 body {
     font-family: "Old Standard TT", serif;
+}
+
+header {
+    background-color: var(--header-color);
+    display: flex;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
 }
