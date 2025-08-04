@@ -64,6 +64,16 @@ main {
     padding: 1rem;
 }
 
+.choose-house button {
+    background-color: var(--word-color);
+    color: var(--header-color);
+    padding: .2rem .4rem;
+    border: 2px solid var(--word-color);
+    border-radius: 4px;
+    font-size: 1.1rem;
+    margin: .5rem;
+}
+
 #search-input {
     width: 300px;
     height: 25px;
