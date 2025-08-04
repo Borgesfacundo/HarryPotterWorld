@@ -15,11 +15,16 @@
 
 body {
     font-family: "Old Standard TT", serif;
+    padding: 0;
+    margin: 0;
+    color: var(--word-color);
 }
 
 header {
     background-color: var(--header-color);
     display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 .logo-container {
@@ -29,4 +34,41 @@ header {
     align-items: center;
     padding: 10px;
     text-align: center;
+}
+
+.welcome-container {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.dark-mode-toggle {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: auto;
+    width: 35px;
+    text-align: center;
+}
+
+.social-media {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    text-align: center;
+    padding: 1rem;
+}
+
+footer {
+    background-color: var(--header-color);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
 }
