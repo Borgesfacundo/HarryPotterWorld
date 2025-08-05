@@ -1,6 +1,7 @@
-import { mainFetch } from "./fetchingData.mjs"; 
+import { mainDisplay } from "./mainDisplay.mjs"; 
+import { mainFetch } from "./fetchingData.mjs";
 
 const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
 
-mainFetch(mainUrl)
-  .then(() => console.log("Data fetched successfully"))
+const data = await mainFetch(mainUrl);
+mainDisplay(data)
