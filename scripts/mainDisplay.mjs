@@ -12,7 +12,22 @@ export function mainDisplay(data) {
             <h2>${element.title}</h2>
             <p><strong>Book #</strong>${element.number}</p>
             <p><strong>Released:</strong> ${element.releaseDate}</p>
+            <a href="#" class="open-dialog">Ver más</a>
         `;
+        // Crear el dialog vacío
+        const dialog = document.createElement('dialog');
+        dialog.className = 'info-dialog';
+        dialog.innerHTML = '<p></p>';
+        item.appendChild(dialog);
+        // Evento para abrir el dialog
+        item.querySelector('.open-dialog').addEventListener('click', (e) => {
+            e.preventDefault();
+            dialog.showModal();
+        });
+        // Evento para cerrar el dialog al hacer click fuera
+        dialog.addEventListener('click', () => {
+            dialog.close();
+        });
         container.appendChild(item);
     });
 }
