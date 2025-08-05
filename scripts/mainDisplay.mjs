@@ -16,3 +16,19 @@ export function mainDisplay(data) {
         container.appendChild(item);
     });
 }
+
+export function displayHouseDetails(houses) {
+    const houseDetails = document.getElementById('house-details');
+
+    houses.forEach(house => {
+        const item = document.createElement('div');
+        item.className = 'house-item';
+        item.innerHTML = `
+            <h2>${house.house}</h2>
+            <p><strong>House Colors:</strong> ${house.colors}</p>
+            <p><strong>Founder:</strong> ${house.founder}</p>
+            <p><strong>Animal:</strong> ${house.animal} ${house.emoji}</p>
+        `;
+        houseDetails.appendChild(item);
+    });
+}

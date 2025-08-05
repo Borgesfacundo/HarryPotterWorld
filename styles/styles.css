@@ -125,6 +125,21 @@ main {
     border-radius: 10px;
 }
 
+#house-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.house-item {
+    background-color: var(--light-combo);
+    color: var(--word-color);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 footer {
     background-color: var(--header-color);
     display: flex;
