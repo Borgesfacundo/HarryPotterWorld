@@ -1,5 +1,5 @@
 // Function to display fetched data in the HTML
-// This function assumes that the data is an array of objects with properties like title, cover,
+// This function assumes that the data is an array of objects with properties like title, cover, image, name, fullName, etc.
 export function mainDisplay(data) {
     const container = document.getElementById('content-display');
     container.innerHTML = ''; // Clear previous content
@@ -7,11 +7,36 @@ export function mainDisplay(data) {
     data.forEach(element => {
         const item = document.createElement('div');
         item.className = 'item';
+        // Detect type and show image and main name
+        let imgSrc = '';
+        let name = '';
+        if (element.cover) {
+            // Book
+            imgSrc = element.cover;
+            name = element.title || element.originalTitle || 'No title';
+        } else if (element.image) {
+            // Character
+            imgSrc = element.image;
+            name = element.fullName || element.name || 'No name';
+        } else if (element.spell) {
+            // Spell
+            imgSrc = 'images/logo.webp';
+            name = element.spell;
+        } else if (element.title) {
+            // Book without cover
+            imgSrc = 'images/logo.webp';
+            name = element.title;
+        } else if (element.fullName || element.name) {
+            // Character or spell without image
+            imgSrc = 'images/logo.webp';
+            name = element.fullName || element.name;
+        } else {
+            imgSrc = 'images/logo.webp';
+            name = 'No name';
+        }
         item.innerHTML = `
-            <img src="${element.cover}" alt="${element.originalTitle}" />
-            <h2>${element.title}</h2>
-            <p><strong>Book #</strong>${element.number}</p>
-            <p><strong>Released:</strong> ${element.releaseDate}</p>
+            <img src="${imgSrc}" alt="${name}" />
+            <h2>${name}</h2>
             <a href="#" class="open-dialog">Ver más</a>
         `;
         // Crear el dialog vacío

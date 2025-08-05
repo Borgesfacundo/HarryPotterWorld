@@ -53,12 +53,38 @@ export function setupSearchBar() {
         // Clear Displays
         const container = document.getElementById('content-display');
         container.innerHTML = '';
-        const houseDetails = document.getElementById('house-details');
-        houseDetails.innerHTML = "<h2>Houses' Information</h2>";
+        // No limpiar ni modificar el contenido de house-details
 
         // Show Results
         mainDisplay(filteredBooks);
-        displayHouseDetails(filteredHouses);
+
+        // Mostrar casas filtradas en un contenedor aparte
+        let searchHouseResults = document.getElementById('search-house-results');
+        if (!searchHouseResults) {
+            searchHouseResults = document.createElement('section');
+            searchHouseResults.id = 'search-house-results';
+            searchHouseResults.innerHTML = '<h2>Resultados de Casas</h2>';
+            // Insertar después de house-details si existe
+            const houseDetails = document.getElementById('house-details');
+            if (houseDetails && houseDetails.parentNode) {
+                houseDetails.parentNode.insertBefore(searchHouseResults, houseDetails.nextSibling);
+            } else {
+                document.body.appendChild(searchHouseResults);
+            }
+        }
+        searchHouseResults.innerHTML = '<h2>Resultados de Casas</h2>';
+        // Mostrar las casas filtradas
+        filteredHouses.forEach(house => {
+            const item = document.createElement('div');
+            item.className = 'house-item';
+            item.innerHTML = `
+                <h2>${house.house}</h2>
+                <p><strong>House Colors:</strong> ${house.colors}</p>
+                <p><strong>Founder:</strong> ${house.founder}</p>
+                <p><strong>Animal:</strong> ${house.animal} ${house.emoji}</p>
+            `;
+            searchHouseResults.appendChild(item);
+        });
 
         // Show Characters
         if (filteredCharacters.length > 0) {

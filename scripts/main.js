@@ -6,8 +6,20 @@ const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
 const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
 
 window.addEventListener('DOMContentLoaded', async () => {
-    const data = await mainFetch(mainUrl);
-    mainDisplay(data);
+    // Potter API endpoints
+    const books = await mainFetch(mainUrl);
+    const characters = await mainFetch("https://potterapi-fedeperin.vercel.app/en/characters");
+    const spells = await mainFetch("https://potterapi-fedeperin.vercel.app/en/spells");
+
+    // Mostrar libros, personajes y hechizos juntos en mainDisplay
+    const combined = [
+        ...books,
+        ...characters,
+        ...spells
+    ];
+    mainDisplay(combined);
+
+    // Mostrar casas en la sección de información
     const house = await mainFetch(houseUrl);
     displayHouseDetails(house);
     setupSearchBar();
