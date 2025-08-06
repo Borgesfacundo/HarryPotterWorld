@@ -1,16 +1,21 @@
+// Logging moved inside mainDisplay
 import { mainFetch } from "./fetchingData.mjs";
 import { showBookDialog } from "./bookDialog.mjs";
 import { showHPDialog } from "./hpDialog.mjs";
 // Function to display fetched data in the HTML
 // This function assumes that the data is an array of objects with properties like title, cover, image, name, fullName, etc.
 export function mainDisplay(data) {
+    const args = arguments;
+    const hpApiCharacters = args[1] || [];
+    const hpApiSpells = args[2] || [];
+    const charactersForDialog = args[3] || [];
+    console.log('mainDisplay called with entities:', data);
+    console.log('mainDisplay charactersForDialog:', charactersForDialog);
     const container = document.getElementById('content-display');
     container.innerHTML = ''; // Clear previous content
 
     // Accept HP-API characters and spells as optional arguments
-    const args = arguments;
-    const hpApiCharacters = args[1] || [];
-    const hpApiSpells = args[2] || [];
+    // ...existing code...
     data.forEach(element => {
         const item = document.createElement('div');
         item.className = 'item';
@@ -39,11 +44,10 @@ export function mainDisplay(data) {
             e.preventDefault();
             if (element.cover || element.title) {
                 await showBookDialog(element, dialog);
-            } else if (element.spell) {
-                // Buscar el spell en Potter DB API por nombre usando spells array
+            } else if (element.spell || (element.name && element.type)) {
                 showHPDialog(element, dialog, hpApiSpells);
-            } else {
-                // Mejor matching: probar con name, fullName, nickname, interpretedBy y alternate_names de HP-API
+            } else if (element.name || element.fullName) {
+                // Fuzzy matching for HP-API characters
                 function normalizeName(str) {
                     return (str || '')
                         .toLowerCase()
@@ -87,10 +91,8 @@ export function mainDisplay(data) {
                     }));
                 });
                 if (charData) {
-                    console.log('Dialog uses HP-API data:', charData);
                     showHPDialog(charData, dialog, hpApiSpells);
                 } else {
-                    console.log('Dialog fallback to PotterAPI data:', element);
                     showHPDialog(element, dialog, hpApiSpells);
                 }
             }

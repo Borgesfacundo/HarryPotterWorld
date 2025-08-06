@@ -24,7 +24,7 @@ export function setupSearchBar() {
         const filteredSpells = potterDbSpells.filter(s => (s.name || '').toLowerCase().includes(query));
 
         // Usar mainDisplay para mostrar libros, personajes y spells con las mismas cartas y dialogs
-        mainDisplay([...filteredBooks, ...filteredChars, ...filteredSpells], window.potterApiCharacters || [], potterDbSpells, window.potterApiCharacters || []);
+        mainDisplay([...filteredBooks, ...filteredChars, ...filteredSpells], window.potterApiCharacters || [], potterDbSpells, [...filteredChars, ...(window.potterApiCharacters || [])]);
     }
 
     searchInput.addEventListener('input', runSearch);
