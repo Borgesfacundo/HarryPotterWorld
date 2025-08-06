@@ -12,13 +12,13 @@ export function showHPDialog(element, dialog, spellsArray = []) {
             <div class="spell-dialog">
                 ${element.image ? `<img src="${element.image}" alt="${element.name}" style="max-width:120px;max-height:120px;" />` : ''}
                 <h2>${element.name || ''}</h2>
-                <p><strong>Incantation:</strong> ${element.incantation || ''}</p>
-                <p><strong>Category:</strong> ${element.category || ''}</p>
-                <p><strong>Effect:</strong> ${element.effect || ''}</p>
-                <p><strong>Creator:</strong> ${element.creator || ''}</p>
-                <p><strong>Hand:</strong> ${element.hand || ''}</p>
-                <p><strong>Light:</strong> ${element.light || ''}</p>
-                <p><strong>Slug:</strong> ${element.slug || ''}</p>
+                <p><strong>Incantation:</strong> ${element.incantation || 'Unavailable'}</p>
+                <p><strong>Category:</strong> ${element.category || 'Unavailable'}</p>
+                <p><strong>Effect:</strong> ${element.effect || 'Unavailable'}</p>
+                <p><strong>Creator:</strong> ${element.creator || 'Unavailable'}</p>
+                <p><strong>Hand:</strong> ${element.hand || 'Unavailable'}</p>
+                <p><strong>Light:</strong> ${element.light || 'Unavailable'}</p>
+                <p><strong>Slug:</strong> ${element.slug || 'Unavailable'}</p>
                 <p><strong>Wiki:</strong> <a href="${element.wiki || '#'}" target="_blank">${element.wiki || ''}</a></p>
             </div>
             <button class="close-dialog">Close</button>
