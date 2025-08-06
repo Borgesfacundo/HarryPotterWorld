@@ -1,4 +1,5 @@
-import { mainDisplay, displayHouseDetails } from "./mainDisplay.mjs"; 
+import { mainDisplay } from "./mainDisplay.mjs";
+import { displayHouseDetails } from "./displayHouseDetails.mjs";
 import { mainFetch } from "./fetchingData.mjs";
 import { setupSearchBar } from "./searchBar.mjs";
 
@@ -32,7 +33,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // Mostrar casas en la sección de información
     const house = await mainFetch(houseUrl);
-    displayHouseDetails(house);
+    displayHouseDetails(house, hpApiCharacters);
     // Llama a setupSearchBar cuando el DOM y los datos globales estén listos
     setupSearchBar();
 });
