@@ -5,14 +5,14 @@ import { showHPDialog } from "./hpDialog.mjs";
 // Function to display fetched data in the HTML
 // This function assumes that the data is an array of objects with properties like title, cover, image, name, fullName, etc.
 export function mainDisplay(data) {
-    // Utilidad para detectar spells PotterDB
+    // Utility to detect PotterDB spells
     function isPotterDBSpell(element) {
         return (
             'category' in element && 'effect' in element
         );
     }
 
-    // Renderiza una card de spell PotterDB
+    // Renders a PotterDB spell card
     function renderSpellCard(element) {
         const item = document.createElement('div');
         item.className = 'item spell-card';
@@ -27,7 +27,7 @@ export function mainDisplay(data) {
         return item;
     }
 
-    // Renderiza una card de libro
+    // Renders a book card
     function renderBookCard(element) {
         const item = document.createElement('div');
         item.className = 'item';
@@ -41,7 +41,7 @@ export function mainDisplay(data) {
         return item;
     }
 
-    // Renderiza una card de personaje
+    // Renders a character card
     function renderCharacterCard(element) {
         const item = document.createElement('div');
         item.className = 'item';
@@ -54,7 +54,7 @@ export function mainDisplay(data) {
         `;
         return item;
     }
-    // PAGINACIÓN
+    // PAGINATION
     const args = arguments;
     const hpApiCharacters = args[1] || [];
     const hpApiSpells = args[2] || [];
@@ -154,11 +154,11 @@ export function mainDisplay(data) {
                 container.appendChild(item);
             }
         });
-        // Botón de paginación
+        // Pagination button
         const paginationDiv = document.createElement('div');
         paginationDiv.style.textAlign = 'center';
         paginationDiv.style.margin = '2rem 0';
-        // Botón anterior
+        // Previous button
         if (page > 1) {
             const prevBtn = document.createElement('button');
             prevBtn.textContent = 'Página anterior';
@@ -169,7 +169,7 @@ export function mainDisplay(data) {
             };
             paginationDiv.appendChild(prevBtn);
         }
-        // Botón siguiente
+        // Next button
         if (page < totalPages) {
             const nextBtn = document.createElement('button');
             nextBtn.textContent = 'Siguiente página';
@@ -179,7 +179,7 @@ export function mainDisplay(data) {
             };
             paginationDiv.appendChild(nextBtn);
         }
-        // Info de página
+        // Page info
         const info = document.createElement('span');
         info.textContent = ` Página ${page} de ${totalPages} `;
         info.style.marginLeft = '1rem';

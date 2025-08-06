@@ -1,13 +1,13 @@
 export function showHPDialog(element, dialog, hpApiCharacters = []) {
     console.log('showHPDialog received data:', element);
     console.log('Showing HP Dialog for:', element);
-    // Detecta si es spell PotterDB
+    // Detects if it is a PotterDB spell
     function isPotterDBSpell(obj) {
         return ('category' in obj && 'effect' in obj);
     }
 
     if (isPotterDBSpell(element)) {
-        // Dialog especial para spells PotterDB
+        // Special dialog for PotterDB spells
         dialog.innerHTML = `
             <div class="spell-dialog">
                 ${element.image ? `<img src="${element.image}" alt="${element.name}" style="max-width:120px;max-height:120px;" />` : ''}
@@ -27,12 +27,12 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
         return;
     }
 
-    // Si es character (HP-API o PotterAPI)
+    // If it is a character (HP-API or PotterAPI)
     const hasName = element.name || element.fullName;
     if (hasName) {
-        // Si el objeto es PotterAPI, buscar matching en HP-API
+        // If the object is PotterAPI, search for matching in HP-API
         let hpChar = null;
-        // Si no se pasa el array completo, intenta usar el global
+        // If the full array is not passed, try to use the global
         if (!Array.isArray(hpApiCharacters) || hpApiCharacters.length === 0) {
             if (window && Array.isArray(window.hpApiCharacters)) {
                 hpApiCharacters = window.hpApiCharacters;
@@ -40,14 +40,14 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
         }
         if (Array.isArray(hpApiCharacters) && hpApiCharacters.length > 0) {
             console.log('hpApiCharacters count:', hpApiCharacters.length);
-            // Normaliza nombres para matching (igual que mainDisplay)
+            // Normalizes names for matching (same as mainDisplay)
             function normalizeName(str) {
                 return (str || '').toLowerCase()
                     .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u')
                     .replace(/[^a-z0-9\s]/g, '')
                     .replace(/\s+/g, ' ').trim();
             }
-            // PotterAPI: nombre principal
+            // PotterAPI: main name
             const potterName = normalizeName(element.fullName || element.name || '');
             console.log('PotterAPI name (normalized):', potterName);
             hpApiCharacters.forEach(c => {
@@ -58,17 +58,17 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
             });
             hpChar = hpApiCharacters.find(c => {
                 const hpName = normalizeName(c.name || c.fullName || '');
-                // Alternates
+                // Alternate names
                 const alternates = Array.isArray(c.alternate_names) ? c.alternate_names.map(normalizeName) : [];
-                // Apodo HP-API
+                // HP-API nickname
                 if (c.nickname) alternates.push(normalizeName(c.nickname));
-                // Coincidencia directa
+                // Direct match
                 if (hpName.includes(potterName) || potterName.includes(hpName)) return true;
-                // Coincidencia con alternates
+                // Match with alternates
                 return alternates.some(alt => alt.includes(potterName) || potterName.includes(alt));
             });
         }
-        // Si hay matching en HP-API, mostrar dialog HP-API
+        // If there is a match in HP-API, show HP-API dialog
         if (hpChar) {
             const dob = hpChar.dateOfBirth || hpChar.dateofBirth || 'Unknown';
             const actor = hpChar.actor || hpChar.interpretedBy || 'Unknown';
@@ -92,7 +92,7 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
             dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
             return;
         }
-        // Si no hay matching, mostrar datos del objeto original (PotterAPI)
+        // If there is no match, show data from the original object (PotterAPI)
         if ('image' in element || 'actor' in element || 'wand' in element) {
             const dob = element.dateOfBirth || element.dateofBirth || 'Unknown';
             const actor = element.actor || element.interpretedBy || 'Unknown';
@@ -132,7 +132,7 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
         return;
     }
 
-    // Si no es spell ni character, mostrar mensaje
+    // If it is neither spell nor character, show message
     dialog.innerHTML = `<p>Tipo de entidad desconocido.</p><button class="close-dialog">Close</button>`;
     dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
 }

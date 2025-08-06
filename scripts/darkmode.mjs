@@ -1,5 +1,5 @@
 // darkMode.mjs
-// Alterna entre modo claro y oscuro y cambia el ícono del botón
+// Toggles between light and dark mode and changes the button icon
 
 export function setupDarkModeToggle() {
     const toggleBtn = document.querySelector('.toggle-icon');

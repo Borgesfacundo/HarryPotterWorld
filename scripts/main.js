@@ -5,16 +5,18 @@ import { setupSearchBar } from "./searchBar.mjs";
 import { setupWelcomeMessage } from "./welcomeMessage.mjs";
 import { setupDarkModeToggle } from "./darkmode.mjs";
 import { setupWandCursor } from "./wandCursor.mjs";
+import { setupLuckyButton } from "./luckyButton.mjs";
 
 const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
 const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
 
-//Welcome message
+// Welcome message
 setupWelcomeMessage();
 
 window.addEventListener('DOMContentLoaded', async () => {
     setupDarkModeToggle();
     setupWandCursor();
+    setupLuckyButton();
     // Potter API endpoints
     const books = await mainFetch(mainUrl);
     const characters = await mainFetch("https://potterapi-fedeperin.vercel.app/en/characters");
@@ -26,17 +28,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     const potterDbSpellsResp = await mainFetch("https://api.potterdb.com/v1/spells");
     const potterDbSpells = potterDbSpellsResp && potterDbSpellsResp.data ? potterDbSpellsResp.data.map(s => s.attributes) : [];
 
-    // Mostrar libros, personajes y spells en mainDisplay
+    // Show books, characters, and spells in mainDisplay
     const combined = [
         ...books,
         ...characters,
         ...potterDbSpells
     ];
-    // Guardar datos globales para el searchBar
+    // Save global data for the searchBar
     window.potterApiBooks = books;
     window.potterApiCharacters = characters;
     window.potterDbSpells = potterDbSpells;
-    // Pasar PotterAPI characters como argumento extra para matching en dialogs
+    // Pass PotterAPI characters as an extra argument for matching in dialogs
     mainDisplay(combined, hpApiCharacters, potterDbSpells, characters);
 
     // Mostrar casas en la sección de información

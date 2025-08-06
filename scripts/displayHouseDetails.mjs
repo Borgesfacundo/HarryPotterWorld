@@ -1,4 +1,4 @@
-// Importa el módulo para mostrar el dialog de estudiantes
+// Imports the module to show the students dialog
 import { showHouseStudentsDialog } from './houseDialog.mjs';
 
 // ...existing code...
@@ -15,7 +15,7 @@ export function displayHouseDetails(houses, hpApiCharacters = []) {
             <p><strong>Animal:</strong> ${house.animal} ${house.emoji}</p>
             <button class="show-students">Ver estudiantes</button>
         `;
-        // Botón para abrir el dialog de estudiantes
+        // Button to open the students dialog
         const btn = item.querySelector('.show-students');
         btn.style.display = 'inline-block';
         btn.addEventListener('click', () => {
