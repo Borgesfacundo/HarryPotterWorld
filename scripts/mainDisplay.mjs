@@ -22,7 +22,7 @@ export function mainDisplay(data) {
             <img src="${imgSrc}" alt="${name}" />
             <h3>${name}</h3>
             <p><strong>Incantation:</strong> ${element.incantation}</p>
-            <a href="#" class="open-dialog">Ver más</a>
+            <a href="#" class="open-dialog">See More</a>
         `;
         return item;
     }
@@ -36,7 +36,7 @@ export function mainDisplay(data) {
         item.innerHTML = `
             <img src="${imgSrc}" alt="${name}" />
             <h3>${name}</h3>
-            <a href="#" class="open-dialog">Ver más</a>
+            <a href="#" class="open-dialog">See More</a>
         `;
         return item;
     }
@@ -50,7 +50,7 @@ export function mainDisplay(data) {
         item.innerHTML = `
             <img src="${imgSrc}" alt="${name}" />
             <h3>${name}</h3>
-            <a href="#" class="open-dialog">Ver más</a>
+            <a href="#" class="open-dialog">See More</a>
         `;
         return item;
     }

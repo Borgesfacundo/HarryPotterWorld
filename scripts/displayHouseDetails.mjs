@@ -13,7 +13,7 @@ export function displayHouseDetails(houses, hpApiCharacters = []) {
             <p><strong>House Colors:</strong> ${house.colors}</p>
             <p><strong>Founder:</strong> ${house.founder}</p>
             <p><strong>Animal:</strong> ${house.animal} ${house.emoji}</p>
-            <button class="show-students">Ver estudiantes</button>
+            <button class="show-students">See Students</button>
         `;
         // Button to open the students dialog
         const btn = item.querySelector('.show-students');
