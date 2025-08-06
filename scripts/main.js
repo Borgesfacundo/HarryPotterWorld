@@ -6,6 +6,7 @@ import { setupWelcomeMessage } from "./welcomeMessage.mjs";
 import { setupDarkModeToggle } from "./darkmode.mjs";
 import { setupWandCursor } from "./wandCursor.mjs";
 import { setupLuckyButton } from "./luckyButton.mjs";
+import { setCurrentYear } from "./year.mjs";
 
 const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
 const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
@@ -17,6 +18,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     setupDarkModeToggle();
     setupWandCursor();
     setupLuckyButton();
+    setCurrentYear();
     // Restore search input from localStorage
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
