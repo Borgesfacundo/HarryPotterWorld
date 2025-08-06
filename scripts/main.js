@@ -21,11 +21,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         ...books,
         ...characters
     ];
+    // Guardar datos globales para el searchBar
+    window.potterApiBooks = books;
+    window.potterApiCharacters = characters;
+    window.potterDbSpells = potterDbSpells;
     // Pasar PotterAPI characters como argumento extra para matching en dialogs
     mainDisplay(combined, hpApiCharacters, potterDbSpells, characters);
 
     // Mostrar casas en la sección de información
     const house = await mainFetch(houseUrl);
     displayHouseDetails(house);
+    // Llama a setupSearchBar cuando el DOM y los datos globales estén listos
     setupSearchBar();
 });
