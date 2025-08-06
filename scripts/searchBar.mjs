@@ -22,8 +22,21 @@ export function setupSearchBar() {
         const query = searchInput.value.trim().toLowerCase();
         console.log('Search query:', query);
         contentDisplay.innerHTML = '';
-        if (!query) return;
-
+        if (!query) {
+            // Si el input está vacío, mostrar el display principal con todos los datos
+            const allItems = [
+                ...potterApiBooks,
+                ...potterApiCharacters,
+                ...potterDbSpells
+            ];
+            mainDisplay(
+                allItems,
+                window.hpApiCharacters || [],
+                window.potterDbSpells || [],
+                window.potterApiCharacters || []
+            );
+            return;
+        }
         // Filtrar entre todos los datos mostrados en el mainDisplay (books, PotterAPI characters, PotterDB spells)
         const allItems = [
             ...potterApiBooks,

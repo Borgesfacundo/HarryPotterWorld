@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const spells = await mainFetch("https://potterapi-fedeperin.vercel.app/en/spells");
     // HP-API characters
     const hpApiCharacters = await mainFetch("https://hp-api.onrender.com/api/characters");
+    window.hpApiCharacters = hpApiCharacters;
     // Potter DB spells
     const potterDbSpellsResp = await mainFetch("https://api.potterdb.com/v1/spells");
     const potterDbSpells = potterDbSpellsResp && potterDbSpellsResp.data ? potterDbSpellsResp.data.map(s => s.attributes) : [];

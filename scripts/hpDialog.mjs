@@ -1,4 +1,4 @@
-export function showHPDialog(element, dialog, spellsArray = []) {
+export function showHPDialog(element, dialog, hpApiCharacters = []) {
     console.log('showHPDialog received data:', element);
     console.log('Showing HP Dialog for:', element);
     // Detecta si es spell PotterDB
@@ -27,28 +27,107 @@ export function showHPDialog(element, dialog, spellsArray = []) {
         return;
     }
 
-    // Si es character (HP-API)
+    // Si es character (HP-API o PotterAPI)
     const hasName = element.name || element.fullName;
-    const dob = element.dateOfBirth || element.dateofBirth || 'Unknown';
-    const actor = element.actor || element.interpretedBy || 'Unknown';
     if (hasName) {
-        dialog.innerHTML = `
-            <h2>${element.name || element.fullName}</h2>
-            <img src="${element.image || 'images/logo.webp'}" alt="${element.name || element.fullName}" />
-            <p><strong>Alternate Names:</strong> ${element.alternate_names || element.nickname || 'Unknown'}</p>
-            <p><strong>House:</strong> ${element.house || element.hogwartsHouse || 'Unknown'}</p>
-            <p><strong>Date of Birth:</strong> ${dob}</p>
-            <p><strong>Species:</strong> ${element.species || 'Unknown'}</p>
-            <p><strong>Gender:</strong> ${element.gender || 'Unknown'}</p>
-            <p><strong>Wizard:</strong> ${element.wizard ? 'Yes' : 'No'}</p>
-            <p><strong>Ancestry:</strong> ${element.ancestry || 'Unknown'}</p>
-            <p><strong>Patronus:</strong> ${element.patronus || 'Unknown'}</p>
-            <p><strong>Eye Colour:</strong> ${element.eyeColour || element.eyeColor || 'Unknown'}</p>
-            <p><strong>Hair Colour:</strong> ${element.hairColour || element.hairColor || 'Unknown'}</p>
-            <p><strong>Actor:</strong> ${actor}</p>
-            <p><strong>Wand:</strong> ${element.wand ? `${element.wand.wood || ''} ${element.wand.core || ''} ${element.wand.length || ''}` : 'Unknown'}</p>
-            <button class="close-dialog">Close</button>
-        `;
+        // Si el objeto es PotterAPI, buscar matching en HP-API
+        let hpChar = null;
+        // Si no se pasa el array completo, intenta usar el global
+        if (!Array.isArray(hpApiCharacters) || hpApiCharacters.length === 0) {
+            if (window && Array.isArray(window.hpApiCharacters)) {
+                hpApiCharacters = window.hpApiCharacters;
+            }
+        }
+        if (Array.isArray(hpApiCharacters) && hpApiCharacters.length > 0) {
+            console.log('hpApiCharacters count:', hpApiCharacters.length);
+            // Normaliza nombres para matching (igual que mainDisplay)
+            function normalizeName(str) {
+                return (str || '').toLowerCase()
+                    .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u')
+                    .replace(/[^a-z0-9\s]/g, '')
+                    .replace(/\s+/g, ' ').trim();
+            }
+            // PotterAPI: nombre principal
+            const potterName = normalizeName(element.fullName || element.name || '');
+            console.log('PotterAPI name (normalized):', potterName);
+            hpApiCharacters.forEach(c => {
+                const hpName = normalizeName(c.name || c.fullName || '');
+                const alternates = Array.isArray(c.alternate_names) ? c.alternate_names.map(normalizeName) : [];
+                if (c.nickname) alternates.push(normalizeName(c.nickname));
+                console.log('Comparando con HP-API:', hpName, alternates);
+            });
+            hpChar = hpApiCharacters.find(c => {
+                const hpName = normalizeName(c.name || c.fullName || '');
+                // Alternates
+                const alternates = Array.isArray(c.alternate_names) ? c.alternate_names.map(normalizeName) : [];
+                // Apodo HP-API
+                if (c.nickname) alternates.push(normalizeName(c.nickname));
+                // Coincidencia directa
+                if (hpName.includes(potterName) || potterName.includes(hpName)) return true;
+                // Coincidencia con alternates
+                return alternates.some(alt => alt.includes(potterName) || potterName.includes(alt));
+            });
+        }
+        // Si hay matching en HP-API, mostrar dialog HP-API
+        if (hpChar) {
+            const dob = hpChar.dateOfBirth || hpChar.dateofBirth || 'Unknown';
+            const actor = hpChar.actor || hpChar.interpretedBy || 'Unknown';
+            dialog.innerHTML = `
+                <h2>${hpChar.name || hpChar.fullName}</h2>
+                <img src="${hpChar.image || 'images/logo.webp'}" alt="${hpChar.name || hpChar.fullName}" />
+                <p><strong>Alternate Names:</strong> ${hpChar.alternate_names || hpChar.nickname || 'Unknown'}</p>
+                <p><strong>House:</strong> ${hpChar.house || hpChar.hogwartsHouse || 'Unknown'}</p>
+                <p><strong>Date of Birth:</strong> ${dob}</p>
+                <p><strong>Species:</strong> ${hpChar.species || 'Unknown'}</p>
+                <p><strong>Gender:</strong> ${hpChar.gender || 'Unknown'}</p>
+                <p><strong>Wizard:</strong> ${hpChar.wizard ? 'Yes' : 'No'}</p>
+                <p><strong>Ancestry:</strong> ${hpChar.ancestry || 'Unknown'}</p>
+                <p><strong>Patronus:</strong> ${hpChar.patronus || 'Unknown'}</p>
+                <p><strong>Eye Colour:</strong> ${hpChar.eyeColour || hpChar.eyeColor || 'Unknown'}</p>
+                <p><strong>Hair Colour:</strong> ${hpChar.hairColour || hpChar.hairColor || 'Unknown'}</p>
+                <p><strong>Actor:</strong> ${actor}</p>
+                <p><strong>Wand:</strong> ${hpChar.wand ? `${hpChar.wand.wood || ''} ${hpChar.wand.core || ''} ${hpChar.wand.length || ''}` : 'Unknown'}</p>
+                <button class="close-dialog">Close</button>
+            `;
+            dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
+            return;
+        }
+        // Si no hay matching, mostrar datos del objeto original (PotterAPI)
+        if ('image' in element || 'actor' in element || 'wand' in element) {
+            const dob = element.dateOfBirth || element.dateofBirth || 'Unknown';
+            const actor = element.actor || element.interpretedBy || 'Unknown';
+            dialog.innerHTML = `
+                <h2>${element.name || element.fullName}</h2>
+                <img src="${element.image || 'images/logo.webp'}" alt="${element.name || element.fullName}" />
+                <p><strong>Alternate Names:</strong> ${element.alternate_names || element.nickname || 'Unknown'}</p>
+                <p><strong>House:</strong> ${element.house || element.hogwartsHouse || 'Unknown'}</p>
+                <p><strong>Date of Birth:</strong> ${dob}</p>
+                <p><strong>Species:</strong> ${element.species || 'Unknown'}</p>
+                <p><strong>Gender:</strong> ${element.gender || 'Unknown'}</p>
+                <p><strong>Wizard:</strong> ${element.wizard ? 'Yes' : 'No'}</p>
+                <p><strong>Ancestry:</strong> ${element.ancestry || 'Unknown'}</p>
+                <p><strong>Patronus:</strong> ${element.patronus || 'Unknown'}</p>
+                <p><strong>Eye Colour:</strong> ${element.eyeColour || element.eyeColor || 'Unknown'}</p>
+                <p><strong>Hair Colour:</strong> ${element.hairColour || element.hairColor || 'Unknown'}</p>
+                <p><strong>Actor:</strong> ${actor}</p>
+                <p><strong>Wand:</strong> ${element.wand ? `${element.wand.wood || ''} ${element.wand.core || ''} ${element.wand.length || ''}` : 'Unknown'}</p>
+                <button class="close-dialog">Close</button>
+            `;
+        } else {
+            dialog.innerHTML = `
+                <h2>${element.fullName || element.name}</h2>
+                <p><strong>House:</strong> ${element.house || 'Unknown'}</p>
+                <p><strong>Role:</strong> ${element.role || 'Unknown'}</p>
+                <p><strong>Blood Status:</strong> ${element.bloodStatus || 'Unknown'}</p>
+                <p><strong>Species:</strong> ${element.species || 'Unknown'}</p>
+                <p><strong>School:</strong> ${element.school || 'Unknown'}</p>
+                <p><strong>Birthday:</strong> ${element.birthday || 'Unknown'}</p>
+                <p><strong>Death:</strong> ${element.death || 'Unknown'}</p>
+                <p><strong>Patronus:</strong> ${element.patronus || 'Unknown'}</p>
+                <p><strong>Wand:</strong> ${element.wand || 'Unknown'}</p>
+                <button class="close-dialog">Close</button>
+            `;
+        }
         dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
         return;
     }
