@@ -17,6 +17,30 @@ window.addEventListener('DOMContentLoaded', async () => {
     setupDarkModeToggle();
     setupWandCursor();
     setupLuckyButton();
+    // Restore search input from localStorage
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        const savedSearch = localStorage.getItem('searchInput');
+        if (savedSearch) {
+            searchInput.value = savedSearch;
+            const event = new Event('input', { bubbles: true });
+            searchInput.dispatchEvent(event);
+        }
+        searchInput.addEventListener('input', () => {
+            localStorage.setItem('searchInput', searchInput.value);
+        });
+    }
+    // Restore dark mode from localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('darkmode');
+        const toggleBtn = document.querySelector('.toggle-icon');
+        if (toggleBtn) toggleBtn.textContent = '☀️';
+    } else if (savedTheme === 'light') {
+        document.body.classList.remove('darkmode');
+        const toggleBtn = document.querySelector('.toggle-icon');
+        if (toggleBtn) toggleBtn.textContent = '🌙';
+    }
     // Potter API endpoints
     const books = await mainFetch(mainUrl);
     const characters = await mainFetch("https://potterapi-fedeperin.vercel.app/en/characters");

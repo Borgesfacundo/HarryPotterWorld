@@ -8,8 +8,10 @@ export function setupDarkModeToggle() {
         document.body.classList.toggle('darkmode');
         if (document.body.classList.contains('darkmode')) {
             toggleBtn.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
         } else {
             toggleBtn.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
         }
     });
 }
