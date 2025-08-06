@@ -10,12 +10,20 @@ body, a, button, input, select, textarea, .item, .house-item, .dark-mode-toggle,
     --header-color: #dad6d6;
     --dark-combo: #522a27;
     --title-color: #a61c3c;
+    --dialog-background: #dad6d6;
+    --see-more-color: #fff;
+    --see-more-background: #a61c3c;
+    --house-title-color: #122c34;
 }
 
 .darkmode {
     --background: #122c34;
-    --word-color: #fff;
-
+    --word-color: #0e0c0c;
+    --dark-combo: #fff;
+    --dialog-background: #122c34;
+    --see-more-color: #fff;
+    --see-more-background: #122c34;
+    --house-title-color: #122c34;
 }
 
 body {
@@ -23,6 +31,7 @@ body {
     padding: 0;
     margin: 0;
     color: var(--dark-combo);
+    background-color: var(--background);
 }
 
 header {
@@ -30,6 +39,10 @@ header {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
+}
+
+header h2 {
+    color: #522a27;
 }
 
 .logo-container {
@@ -67,6 +80,18 @@ header {
     gap: 7px;
     justify-content: center;
     align-items: center;
+}
+
+dialog {
+    background-color: var(--dialog-background);
+    color: var(--dark-combo);
+    width: 80%;
+    height: auto;
+    text-align: center;
+}
+
+dialog a {
+    color: var(--dark-combo);
 }
 
 main {
@@ -135,6 +160,26 @@ main {
     border-radius: 10px;
 }
 
+.item a {
+    text-decoration: none;
+    color: var(--see-more-color);
+    padding: .5rem;
+    background-color: var(--see-more-background);
+    border-radius: 9px;
+}
+
+.close-dialog {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--title-color);
+    color: var(--background);
+    border: none;
+    padding: .5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 #house-details {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -145,7 +190,6 @@ main {
 #house-details h2 {
     grid-column: 1 / -1;
     text-align: center;
-    color: var(--title-color);
 }
 
 .house-item {
@@ -154,6 +198,10 @@ main {
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.house-item h2 {
+    color: var(--house-title-color);
 }
 
 footer {

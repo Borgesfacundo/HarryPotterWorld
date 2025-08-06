@@ -3,6 +3,7 @@ import { displayHouseDetails } from "./displayHouseDetails.mjs";
 import { mainFetch } from "./fetchingData.mjs";
 import { setupSearchBar } from "./searchBar.mjs";
 import { setupWelcomeMessage } from "./welcomeMessage.mjs";
+import { setupDarkModeToggle } from "./darkmode.mjs";
 import { setupWandCursor } from "./wandCursor.mjs";
 
 const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
@@ -12,6 +13,7 @@ const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
 setupWelcomeMessage();
 
 window.addEventListener('DOMContentLoaded', async () => {
+    setupDarkModeToggle();
     setupWandCursor();
     // Potter API endpoints
     const books = await mainFetch(mainUrl);
