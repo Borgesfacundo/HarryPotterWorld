@@ -11,20 +11,43 @@ export function setupSearchBar() {
     const potterApiCharacters = window.potterApiCharacters || [];
     const potterDbSpells = window.potterDbSpells || [];
 
+    // Helper to get currently displayed items (books + characters)
+    function getCurrentDisplayItems() {
+        // For now, always use potterApiBooks + potterApiCharacters as the current display
+        // If you want to filter only what is visible, you can add logic here
+        return [...potterApiBooks, ...potterApiCharacters];
+    }
+
     function runSearch() {
         const query = searchInput.value.trim().toLowerCase();
         console.log('Search query:', query);
         contentDisplay.innerHTML = '';
         if (!query) return;
 
-        // Filtrar libros y personajes
-        const filteredBooks = potterApiBooks.filter(b => (b.title || '').toLowerCase().includes(query));
-        const filteredChars = potterApiCharacters.filter(c => (c.fullName || c.name || '').toLowerCase().includes(query));
-        // Filtrar spells
-        const filteredSpells = potterDbSpells.filter(s => (s.name || '').toLowerCase().includes(query));
-
-        // Usar mainDisplay para mostrar libros, personajes y spells con las mismas cartas y dialogs
-        mainDisplay([...filteredBooks, ...filteredChars, ...filteredSpells], window.potterApiCharacters || [], potterDbSpells, [...filteredChars, ...(window.potterApiCharacters || [])]);
+        // Filtrar entre todos los datos mostrados en el mainDisplay (books, PotterAPI characters, PotterDB spells)
+        const allItems = [
+            ...potterApiBooks,
+            ...potterApiCharacters,
+            ...potterDbSpells
+        ];
+        const normalize = str => (str || '').toLowerCase().trim();
+        const filteredAll = allItems.filter(item => {
+            // Books
+            if (item.title) return normalize(item.title).includes(query);
+            // PotterAPI Characters
+            if (item.fullName || item.name) return normalize(item.fullName || item.name).includes(query);
+            // PotterDB Spells
+            if (item.name && item.incantation) return normalize(item.name).includes(query) || normalize(item.incantation).includes(query);
+            // Fallback
+            return false;
+        });
+        // Usar mainDisplay para mostrar los filtrados
+        mainDisplay(
+            filteredAll,
+            window.hpApiCharacters || [],
+            window.potterDbSpells || [],
+            window.potterApiCharacters || []
+        );
     }
 
     searchInput.addEventListener('input', runSearch);

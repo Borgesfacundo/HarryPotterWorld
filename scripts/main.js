@@ -16,10 +16,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     const potterDbSpellsResp = await mainFetch("https://api.potterdb.com/v1/spells");
     const potterDbSpells = potterDbSpellsResp && potterDbSpellsResp.data ? potterDbSpellsResp.data.map(s => s.attributes) : [];
 
-    // Mostrar solo libros y personajes en mainDisplay
+    // Mostrar libros, personajes y spells en mainDisplay
     const combined = [
         ...books,
-        ...characters
+        ...characters,
+        ...potterDbSpells
     ];
     // Guardar datos globales para el searchBar
     window.potterApiBooks = books;

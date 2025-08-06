@@ -1,7 +1,33 @@
 export function showHPDialog(element, dialog, spellsArray = []) {
     console.log('showHPDialog received data:', element);
     console.log('Showing HP Dialog for:', element);
-    // Character dialog (HP-API fields only)
+    // Detecta si es spell PotterDB
+    function isPotterDBSpell(obj) {
+        return ('category' in obj && 'effect' in obj);
+    }
+
+    if (isPotterDBSpell(element)) {
+        // Dialog especial para spells PotterDB
+        dialog.innerHTML = `
+            <div class="spell-dialog">
+                ${element.image ? `<img src="${element.image}" alt="${element.name}" style="max-width:120px;max-height:120px;" />` : ''}
+                <h2>${element.name || ''}</h2>
+                <p><strong>Incantation:</strong> ${element.incantation || ''}</p>
+                <p><strong>Category:</strong> ${element.category || ''}</p>
+                <p><strong>Effect:</strong> ${element.effect || ''}</p>
+                <p><strong>Creator:</strong> ${element.creator || ''}</p>
+                <p><strong>Hand:</strong> ${element.hand || ''}</p>
+                <p><strong>Light:</strong> ${element.light || ''}</p>
+                <p><strong>Slug:</strong> ${element.slug || ''}</p>
+                <p><strong>Wiki:</strong> <a href="${element.wiki || '#'}" target="_blank">${element.wiki || ''}</a></p>
+            </div>
+            <button class="close-dialog">Close</button>
+        `;
+        dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
+        return;
+    }
+
+    // Si es character (HP-API)
     const hasName = element.name || element.fullName;
     const dob = element.dateOfBirth || element.dateofBirth || 'Unknown';
     const actor = element.actor || element.interpretedBy || 'Unknown';
@@ -24,37 +50,10 @@ export function showHPDialog(element, dialog, spellsArray = []) {
             <button class="close-dialog">Close</button>
         `;
         dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
+        return;
     }
-    // Spell dialog (Potter DB API, local array)
-    else if (element.spell || (element.name && element.type)) {
-        // Prefer PotterAPI spell name, fallback to HP-API name
-        const requestedRaw = (element.spell || element.name);
-        const normalize = str => (str || '').toLowerCase().replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u').replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
-        const requested = normalize(requestedRaw);
-        console.log('Potter DB spells array:', spellsArray);
-        let spell = null;
-        if (Array.isArray(spellsArray)) {
-            spell = spellsArray.find(s => {
-                const spellNorm = normalize(s.name);
-                if (spellNorm === requested) return true;
-                // Fuzzy: compare first 3 and last 4 chars
-                return spellNorm.slice(0,3) === requested.slice(0,3) && spellNorm.slice(-4) === requested.slice(-4);
-            });
-        }
-        if (spell) {
-            dialog.innerHTML = `
-                <h2>${spell.name}</h2>
-                <p><strong>Type:</strong> ${spell.type || 'Unknown'}</p>
-                <p><strong>Incantation:</strong> ${spell.incantation || 'Unknown'}</p>
-                <p><strong>Effect:</strong> ${spell.effect || 'Unknown'}</p>
-                <p><strong>Light:</strong> ${spell.light || 'Unknown'}</p>
-                <p><strong>Creator:</strong> ${spell.creator || 'Unknown'}</p>
-                <p><strong>Wiki:</strong> <a href="${spell.wiki || '#'}" target="_blank">Más info</a></p>
-                <button class="close-dialog">Close</button>
-            `;
-        } else {
-            dialog.innerHTML = `<p>No info found for this spell in Potter DB API.</p><button class="close-dialog">Close</button>`;
-        }
-        dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
-    }
+
+    // Si no es spell ni character, mostrar mensaje
+    dialog.innerHTML = `<p>Tipo de entidad desconocido.</p><button class="close-dialog">Close</button>`;
+    dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
 }
