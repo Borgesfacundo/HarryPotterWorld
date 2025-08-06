@@ -3,6 +3,7 @@ import { displayHouseDetails } from "./displayHouseDetails.mjs";
 import { mainFetch } from "./fetchingData.mjs";
 import { setupSearchBar } from "./searchBar.mjs";
 import { setupWelcomeMessage } from "./welcomeMessage.mjs";
+import { setupWandCursor } from "./wandCursor.mjs";
 
 const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
 const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
@@ -11,6 +12,7 @@ const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
 setupWelcomeMessage();
 
 window.addEventListener('DOMContentLoaded', async () => {
+    setupWandCursor();
     // Potter API endpoints
     const books = await mainFetch(mainUrl);
     const characters = await mainFetch("https://potterapi-fedeperin.vercel.app/en/characters");

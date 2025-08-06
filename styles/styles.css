@@ -1,3 +1,8 @@
+/* Cursor de varita mágica global (máxima prioridad) */
+body, a, button, input, select, textarea, .item, .house-item, .dark-mode-toggle, .social-icon {
+    cursor: url('images/cursors/wand-cursor.cur') !important;
+}
+/* Variables de color */
 :root {
     --background: #fff;
     --word-color: #122c34;
