@@ -2,9 +2,13 @@ import { mainDisplay } from "./mainDisplay.mjs";
 import { displayHouseDetails } from "./displayHouseDetails.mjs";
 import { mainFetch } from "./fetchingData.mjs";
 import { setupSearchBar } from "./searchBar.mjs";
+import { setupWelcomeMessage } from "./welcomeMessage.mjs";
 
 const mainUrl = "https://potterapi-fedeperin.vercel.app/en/books";
 const houseUrl = "https://potterapi-fedeperin.vercel.app/en/houses";
+
+//Welcome message
+setupWelcomeMessage();
 
 window.addEventListener('DOMContentLoaded', async () => {
     // Potter API endpoints

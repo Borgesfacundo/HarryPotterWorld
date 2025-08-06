@@ -32,7 +32,7 @@ header {
     flex-direction: column;
     width: 150px;
     align-items: center;
-    padding: 10px;
+    padding: 1rem;
     text-align: center;
 }
 
@@ -40,6 +40,11 @@ header {
     text-align: center;
     justify-content: center;
     align-content: center;
+    padding: .5rem 1rem;
+}
+
+.welcome-container h2 {
+    font-size: 1.1em;
 }
 
 .dark-mode-toggle {
