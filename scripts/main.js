@@ -10,18 +10,19 @@ window.addEventListener('DOMContentLoaded', async () => {
     const books = await mainFetch(mainUrl);
     const characters = await mainFetch("https://potterapi-fedeperin.vercel.app/en/characters");
     const spells = await mainFetch("https://potterapi-fedeperin.vercel.app/en/spells");
-    // HP-API characters and spells
+    // HP-API characters
     const hpApiCharacters = await mainFetch("https://hp-api.onrender.com/api/characters");
-    const hpApiSpells = await mainFetch("https://hp-api.onrender.com/api/spells");
+    // Potter DB spells
+    const potterDbSpellsResp = await mainFetch("https://api.potterdb.com/v1/spells");
+    const potterDbSpells = potterDbSpellsResp && potterDbSpellsResp.data ? potterDbSpellsResp.data.map(s => s.attributes) : [];
 
-    // Mostrar libros, personajes y hechizos juntos en mainDisplay
+    // Mostrar solo libros y personajes en mainDisplay
     const combined = [
         ...books,
-        ...characters,
-        ...spells
+        ...characters
     ];
     // Pasar PotterAPI characters como argumento extra para matching en dialogs
-    mainDisplay(combined, hpApiCharacters, hpApiSpells, characters);
+    mainDisplay(combined, hpApiCharacters, potterDbSpells, characters);
 
     // Mostrar casas en la sección de información
     const house = await mainFetch(houseUrl);

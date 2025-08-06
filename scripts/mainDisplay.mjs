@@ -40,14 +40,8 @@ export function mainDisplay(data) {
             if (element.cover || element.title) {
                 await showBookDialog(element, dialog);
             } else if (element.spell) {
-                // Buscar el spell en HP-API por nombre
-                const spellData = hpApiSpells.find(s => s.name?.toLowerCase() === (element.spell?.toLowerCase()));
-                if (spellData) {
-                    showHPDialog(spellData, dialog);
-                } else {
-                    dialog.innerHTML = `<p>No info found for this spell in HP-API.</p><button class="close-dialog">Close</button>`;
-                    dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
-                }
+                // Buscar el spell en Potter DB API por nombre usando spells array
+                showHPDialog(element, dialog, hpApiSpells);
             } else {
                 // Mejor matching: probar con name, fullName, nickname, interpretedBy y alternate_names de HP-API
                 function normalizeName(str) {
@@ -94,10 +88,10 @@ export function mainDisplay(data) {
                 });
                 if (charData) {
                     console.log('Dialog uses HP-API data:', charData);
-                    showHPDialog(charData, dialog);
+                    showHPDialog(charData, dialog, hpApiSpells);
                 } else {
                     console.log('Dialog fallback to PotterAPI data:', element);
-                    showHPDialog(element, dialog);
+                    showHPDialog(element, dialog, hpApiSpells);
                 }
             }
             dialog.showModal();
