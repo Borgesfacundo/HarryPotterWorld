@@ -1,6 +1,6 @@
 /* Global magic wand cursor (highest priority) */
 body, a, button, input, select, textarea, .item, .house-item, .dark-mode-toggle, .social-icon {
-    cursor: url('images/cursors/wand-cursor.cur') !important;
+    cursor: url('images/cursors/wand-cursor.cur'), auto !important;
 }
 /* Variables de color */
 :root {
