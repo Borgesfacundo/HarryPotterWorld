@@ -1,7 +1,7 @@
-const gryffindor = document.getElementById("house-button gryffindor");
-const hufflepuff = document.getElementById("house-button hufflepuff");
-const ravenclaw = document.getElementById("house-button ravenclaw");
-const slytherin = document.getElementById("house-button slytherin");
+const gryffindor = document.getElementById("house-button-gryffindor");
+const hufflepuff = document.getElementById("house-button-hufflepuff");
+const ravenclaw = document.getElementById("house-button-ravenclaw");
+const slytherin = document.getElementById("house-button-slytherin");
 
 export function setupWelcomeMessage() {
     gryffindor.addEventListener("click", () => {
