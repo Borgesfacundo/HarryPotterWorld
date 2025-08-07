@@ -57,6 +57,14 @@ header h2 {
 .logo-container img {
     border-radius: 110px;
     border: 2px solid var(--title-color);
+    transition: 1s ease;
+}
+
+.logo-container img:hover {
+    -webkit-transform: rotateZ(-360deg);
+    -ms-transform: rotateZ(-360deg);
+    transform: rotateZ(-360deg);
+    transition: 1s ease;
 }
 
 .welcome-container {
