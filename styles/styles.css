@@ -54,6 +54,11 @@ header h2 {
     text-align: center;
 }
 
+.logo-container img {
+    border-radius: 110px;
+    border: 2px solid var(--title-color);
+}
+
 .welcome-container {
     text-align: center;
     justify-content: center;
@@ -166,6 +171,10 @@ main {
     padding: 1rem;
 }
 
+#content-display:has(.item:hover) .item:not(:hover) {
+    filter:blur(4px);
+}
+
 .pagination {
     grid-column: 1 / -1;
 }
@@ -176,6 +185,7 @@ main {
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 150ms ease-in-out;
 }
 
 .item img {
