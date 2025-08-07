@@ -45,7 +45,6 @@ header > div {
     min-width: 25%;
     flex: 1 1 25%;
 }
-}
 
 header h2 {
     color: #522a27;
@@ -101,6 +100,7 @@ header h2 {
 
 .welcome-container h2 {
     font-size: 1.1em;
+    color: #522a27;
 }
 
 .dark-mode-toggle {
