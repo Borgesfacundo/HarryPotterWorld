@@ -41,6 +41,12 @@ header {
     justify-content: space-around;
 }
 
+header > div {
+    min-width: 25%;
+    flex: 1 1 25%;
+}
+}
+
 header h2 {
     color: #522a27;
 }
@@ -72,6 +78,25 @@ header h2 {
     justify-content: center;
     align-content: center;
     padding: .5rem 1rem;
+}
+
+.welcome-animate {
+    animation: welcomeFadeIn 1.2s cubic-bezier(.77,0,.18,1) 0s 1 normal both;
+}
+
+@keyframes welcomeFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-30px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .welcome-container h2 {
