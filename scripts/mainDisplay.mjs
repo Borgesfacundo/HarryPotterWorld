@@ -156,6 +156,7 @@ export function mainDisplay(data) {
         });
         // Pagination button
         const paginationDiv = document.createElement('div');
+        paginationDiv.className = 'pagination';
         paginationDiv.style.textAlign = 'center';
         paginationDiv.style.margin = '2rem 0';
         // Previous button

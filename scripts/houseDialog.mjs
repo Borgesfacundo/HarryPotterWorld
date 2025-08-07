@@ -10,11 +10,11 @@ export function showHouseStudentsDialog(houseName, dialog, hpApiCharacters = [])
     // Filters students of the house
     const students = hpApiCharacters.filter(c => normalizeHouse(c.house || c.hogwartsHouse) === normalizedHouse);
     dialog.innerHTML = `
-        <h2>Estudiantes de ${houseName}</h2>
+        <h2>Students of ${houseName}</h2>
         <ul>
             ${students.length > 0 ? students.map(s => `<li>${s.name || s.fullName}</li>`).join('') : '<li>No hay estudiantes encontrados.</li>'}
         </ul>
-        <button class="close-dialog">Cerrar</button>
+        <button class="close-dialog">Close</button>
     `;
     dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
 }

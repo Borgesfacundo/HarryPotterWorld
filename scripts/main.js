@@ -67,9 +67,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     // Pass PotterAPI characters as an extra argument for matching in dialogs
     mainDisplay(combined, hpApiCharacters, potterDbSpells, characters);
 
-    // Mostrar casas en la sección de información
+    // Show houses on info section
     const house = await mainFetch(houseUrl);
     displayHouseDetails(house, hpApiCharacters);
-    // Llama a setupSearchBar cuando el DOM y los datos globales estén listos
+    // Call setupSearchBar when DOM and global data is ready
     setupSearchBar();
 });

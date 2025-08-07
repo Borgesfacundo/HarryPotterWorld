@@ -4,7 +4,7 @@ import { showHouseStudentsDialog } from './houseDialog.mjs';
 // ...existing code...
 export function displayHouseDetails(houses, hpApiCharacters = []) {
     const houseDetails = document.getElementById('house-details');
-    houseDetails.innerHTML = `<h1 class="house-section-title">Casas de Hogwarts</h1>`;
+    houseDetails.innerHTML = `<h1 class="house-section-title">Hogwarts' Houses</h1>`;
     houses.forEach(house => {
         const item = document.createElement('div');
         item.className = 'house-item';
