@@ -2,7 +2,7 @@ import { showHPDialog } from "./hpDialog.mjs";
 import { mainDisplay } from "./mainDisplay.mjs";
 
 export function setupSearchBar() {
-    console.log('setupSearchBar called');
+
     const searchInput = document.getElementById('search-input');
     const contentDisplay = document.getElementById('content-display');
     if (!searchInput || !contentDisplay) return;
@@ -20,7 +20,7 @@ export function setupSearchBar() {
 
     function runSearch() {
         const query = searchInput.value.trim().toLowerCase();
-        console.log('Search query:', query);
+
         contentDisplay.innerHTML = '';
         if (!query) {
             // Si el input está vacío, mostrar el display principal con todos los datos
@@ -68,5 +68,5 @@ export function setupSearchBar() {
     if (searchButton) {
         searchButton.addEventListener('click', runSearch);
     }
-    console.log('Search listeners added');
+
 }

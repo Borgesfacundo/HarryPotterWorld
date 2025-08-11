@@ -1,6 +1,6 @@
 export function showHPDialog(element, dialog, hpApiCharacters = []) {
-    console.log('showHPDialog received data:', element);
-    console.log('Showing HP Dialog for:', element);
+
+
     // Detects if it is a PotterDB spell
     function isPotterDBSpell(obj) {
         return ('category' in obj && 'effect' in obj);
@@ -39,7 +39,7 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
             }
         }
         if (Array.isArray(hpApiCharacters) && hpApiCharacters.length > 0) {
-            console.log('hpApiCharacters count:', hpApiCharacters.length);
+
             // Normalizes names for matching (same as mainDisplay)
             function normalizeName(str) {
                 return (str || '').toLowerCase()
@@ -49,12 +49,12 @@ export function showHPDialog(element, dialog, hpApiCharacters = []) {
             }
             // PotterAPI: main name
             const potterName = normalizeName(element.fullName || element.name || '');
-            console.log('PotterAPI name (normalized):', potterName);
+
             hpApiCharacters.forEach(c => {
                 const hpName = normalizeName(c.name || c.fullName || '');
                 const alternates = Array.isArray(c.alternate_names) ? c.alternate_names.map(normalizeName) : [];
                 if (c.nickname) alternates.push(normalizeName(c.nickname));
-                console.log('Comparando con HP-API:', hpName, alternates);
+
             });
             hpChar = hpApiCharacters.find(c => {
                 const hpName = normalizeName(c.name || c.fullName || '');
